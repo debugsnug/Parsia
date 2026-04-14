@@ -1,8 +1,9 @@
 {
-  "scene": "Forest",
+  "scene": "LavaArena",
   "characters": [
     "Hero",
-    "Villain"
+    "Villain",
+    "Companion"
   ],
   "actions": [
     {
@@ -10,9 +11,18 @@
       "who": "Hero"
     },
     {
+      "type": "enter",
+      "who": "Companion"
+    },
+    {
       "type": "say",
       "who": "Hero",
-      "text": "Where am I..."
+      "text": "This is where it ends."
+    },
+    {
+      "type": "say",
+      "who": "Companion",
+      "text": "Stay sharp..."
     },
     {
       "type": "emote",
@@ -20,8 +30,37 @@
       "emotion": "thinking"
     },
     {
+      "type": "emote",
+      "who": "Companion",
+      "emotion": "scared"
+    },
+    {
       "type": "wait",
       "duration": 1.0
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "UP",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Companion",
+      "dir": "UP",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "UP",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Companion",
+      "dir": "UP",
+      "steps": 1
     },
     {
       "type": "enter",
@@ -35,22 +74,247 @@
     {
       "type": "say",
       "who": "Villain",
-      "text": "You shouldn't be here."
+      "text": "Foolish heroes..."
     },
     {
       "type": "emote",
       "who": "Hero",
-      "emotion": "scared"
+      "emotion": "angry"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "We\u2019ll stop you!"
+    },
+    {
+      "type": "wait",
+      "duration": 1.0
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 1
     },
     {
       "type": "move",
       "who": "Hero",
       "dir": "LEFT",
-      "steps": 2
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "RIGHT",
+      "steps": 1
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "surprised"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "He's strong..."
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "thinking"
     },
     {
       "type": "wait",
       "duration": 1.0
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "thinking"
+    },
+    {
+      "type": "wait",
+      "duration": 1.0
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "angry"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "Now!"
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 1
+    },
+    {
+      "type": "emote",
+      "who": "Villain",
+      "emotion": "surprised"
+    },
+    {
+      "type": "say",
+      "who": "Villain",
+      "text": "You dare...?"
+    },
+    {
+      "type": "wait",
+      "duration": 2.0
+    },
+    {
+      "type": "emote",
+      "who": "Villain",
+      "emotion": "angry"
+    },
+    {
+      "type": "say",
+      "who": "Villain",
+      "text": "Enough! Witness my TRUE power!"
+    },
+    {
+      "type": "wait",
+      "duration": 2.0
+    },
+    {
+      "type": "exit",
+      "who": "Hero"
+    },
+    {
+      "type": "exit",
+      "who": "Companion"
+    },
+    {
+      "type": "exit",
+      "who": "Villain"
+    },
+    {
+      "type": "enter",
+      "who": "Hero"
+    },
+    {
+      "type": "enter",
+      "who": "Companion"
+    },
+    {
+      "type": "enter",
+      "who": "Villain"
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "surprised"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "The ground... it's burning!"
+    },
+    {
+      "type": "emote",
+      "who": "Companion",
+      "emotion": "scared"
+    },
+    {
+      "type": "say",
+      "who": "Companion",
+      "text": "We\u2019ve been pulled into another arena!"
+    },
+    {
+      "type": "emote",
+      "who": "Villain",
+      "emotion": "angry"
+    },
+    {
+      "type": "say",
+      "who": "Villain",
+      "text": "Welcome to your end."
+    },
+    {
+      "type": "wait",
+      "duration": 2.0
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
     },
     {
       "type": "move",
@@ -59,26 +323,188 @@
       "steps": 2
     },
     {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "scared"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "He's faster now!"
+    },
+    {
+      "type": "emote",
+      "who": "Companion",
+      "emotion": "wave"
+    },
+    {
+      "type": "say",
+      "who": "Companion",
+      "text": "Don't give up!"
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "wait",
+      "duration": 1.0
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "angry"
+    },
+    {
+      "type": "say",
+      "who": "Hero",
+      "text": "This ends NOW!"
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 3
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 3
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "move",
+      "who": "Hero",
+      "dir": "RIGHT",
+      "steps": 3
+    },
+    {
+      "type": "move",
+      "who": "Villain",
+      "dir": "LEFT",
+      "steps": 2
+    },
+    {
+      "type": "emote",
+      "who": "Villain",
+      "emotion": "sad"
+    },
+    {
       "type": "say",
       "who": "Villain",
-      "text": "You can't escape."
+      "text": "Impossible..."
+    },
+    {
+      "type": "wait",
+      "duration": 2.0
+    },
+    {
+      "type": "emote",
+      "who": "Hero",
+      "emotion": "tired"
+    },
+    {
+      "type": "emote",
+      "who": "Companion",
+      "emotion": "happy"
     },
     {
       "type": "say",
       "who": "Hero",
-      "text": "Watch me!"
+      "text": "It's over..."
     },
     {
-      "type": "move",
-      "who": "Hero",
-      "dir": "LEFT",
-      "steps": 1
+      "type": "say",
+      "who": "Companion",
+      "text": "We actually did it!"
     },
     {
-      "type": "move",
-      "who": "Hero",
-      "dir": "LEFT",
-      "steps": 1
+      "type": "exit",
+      "who": "Villain"
+    },
+    {
+      "type": "wait",
+      "duration": 1.0
     },
     {
       "type": "emote",
@@ -88,7 +514,7 @@
     {
       "type": "say",
       "who": "Hero",
-      "text": "Freedom!"
+      "text": "Let's go home."
     },
     {
       "type": "exit",
@@ -96,12 +522,12 @@
     },
     {
       "type": "exit",
-      "who": "Villain"
+      "who": "Companion"
     }
   ],
   "metadata": {
     "compiler": "Parsia v1.0",
-    "actionCount": 19,
-    "characterCount": 2
+    "actionCount": 100,
+    "characterCount": 3
   }
 }
