@@ -1,4 +1,4 @@
-SCENE DarkForest
+SCENE Castle
 
 CHARACTER Hero
 CHARACTER Villain
