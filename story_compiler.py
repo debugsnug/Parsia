@@ -1,6 +1,12 @@
 import sys
 import json
 import re
+import io
+
+# Force UTF-8 encoding for Windows consoles - Fixes UnicodeEncodeError
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 from enum import Enum, auto
 from dataclasses import dataclass, field
 from typing import Any, List, Optional, Dict
@@ -1306,6 +1312,10 @@ class CodeGenerator:
                 pass
 
             elif ins.op == "SET_SCENE":
+                if self.scene is not None and ins.src1 != self.scene:
+                    # Emit a scene_change action for mid-story scene transitions
+                    self.actions.append({"type": "scene_change", "scene": ins.src1})
+                    print(f"  🎬 Scene change: {self.scene} → {ins.src1}")
                 self.scene = ins.src1
                 print(f"  🎬 Scene: {self.scene}")
 
@@ -1425,6 +1435,22 @@ class CodeGenerator:
 # ══════════════════════════════════════════
 # MAIN DRIVER
 # ══════════════════════════════════════════
+
+def compile_source(source: str, verbose: bool = False) -> dict:
+    """Compile a .story source string and return the animation JSON as a dict."""
+    lexer = Lexer(source)
+    tokens = lexer.tokenize()
+    parser = Parser(tokens)
+    ast = parser.parse()
+    sem = SemanticAnalyser()
+    sem.analyse(ast)
+    irgen = IRGenerator()
+    ir = irgen.generate(ast)
+    optimizer = IROptimizer(verbose=verbose)
+    ir_opt = optimizer.run(ir)
+    codegen = CodeGenerator()
+    return codegen.execute(ir_opt)
+
 
 def compile_file(filepath: str, output_file: Optional[str] = None, verbose: bool = False):
     DIVIDER = "═" * 56
