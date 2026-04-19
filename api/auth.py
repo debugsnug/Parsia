@@ -104,6 +104,27 @@ def _init_db():
             is_active   INTEGER DEFAULT 1,
             FOREIGN KEY (user_id) REFERENCES users(id)
         );
+        CREATE TABLE IF NOT EXISTS feedback (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            rating      INTEGER NOT NULL,
+            category    TEXT DEFAULT 'general',
+            message     TEXT DEFAULT '',
+            user_email  TEXT DEFAULT '',
+            page_url    TEXT DEFAULT '',
+            created_at  TEXT DEFAULT (datetime('now'))
+        );
+        CREATE TABLE IF NOT EXISTS issue_reports (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            category    TEXT DEFAULT 'bug',
+            title       TEXT NOT NULL,
+            body        TEXT NOT NULL,
+            severity    TEXT DEFAULT 'medium',
+            user_email  TEXT DEFAULT '',
+            user_agent  TEXT DEFAULT '',
+            page_url    TEXT DEFAULT '',
+            status      TEXT DEFAULT 'open',
+            created_at  TEXT DEFAULT (datetime('now'))
+        );
     """)
     conn.commit()
     conn.close()
@@ -245,7 +266,6 @@ def send_otp_email(to_email: str, otp_code: str, purpose: str = "verify"):
     except Exception as e:
         print(f"[Parsia OTP] ✕ Email send FAILED: {e}")
         print(f"[Parsia OTP]   Host: {smtp_host}:{smtp_port}, User: {smtp_user}")
-        print(f"[Parsia OTP]   OTP for {to_email}: {otp_code}")
         return False
 
 
@@ -445,21 +465,6 @@ def verify_otp(req: VerifyOtpRequest, request: Request):
 def login(req: LoginRequest, request: Request):
     """Sign in with email and password."""
     email = req.email.strip().lower()
-
-    # Special bypass for Admin Module
-    if email == "admin@parsia.app" and req.password == "Admin123!":
-        token = create_jwt("admin-system", email, "admin")
-        return {
-            "message": "Admin Signed in successfully!",
-            "token": token,
-            "user": {
-                "id": "admin-system",
-                "email": email,
-                "name": "System Administrator",
-                "role": "admin",
-                "is_verified": True,
-            }
-        }
 
     conn = _get_db()
 

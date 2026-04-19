@@ -1320,6 +1320,214 @@
       box-shadow: 0 0 14px rgba(0, 201, 177, .3);
     }
 
+
+    /* ── FEEDBACK / REPORT MODALS ── */
+    .fb-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2100;
+      background: rgba(2,6,16,.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .fb-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .fb-card {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: linear-gradient(160deg, rgba(8,18,36,.98), rgba(4,10,22,.98));
+      border: 1px solid rgba(0,201,177,.18);
+      border-radius: 24px;
+      padding: 40px 36px 32px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 60px rgba(0,201,177,.06);
+      transform: translateY(20px) scale(.97);
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .fb-overlay.visible .fb-card {
+      transform: translateY(0) scale(1);
+    }
+    .fb-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.4);
+      font-size: 16px;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .fb-close:hover { color: #fff; }
+    .fb-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(0,201,177,.1);
+      border: 1px solid rgba(0,201,177,.25);
+      color: #00c9b1;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .fb-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 6px;
+    }
+    .fb-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,.45);
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+    .fb-stars {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .fb-star {
+      font-size: 34px;
+      color: rgba(255,255,255,.15);
+      cursor: pointer;
+      transition: color .15s, transform .15s;
+      line-height: 1;
+      user-select: none;
+    }
+    .fb-star.active { color: #ffc107; }
+    .fb-star:hover { transform: scale(1.2); }
+    .fb-star-label {
+      font-size: 12px;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 20px;
+      min-height: 18px;
+      letter-spacing: .04em;
+    }
+    .fb-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .fb-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .fb-chip.selected {
+      border-color: var(--teal, #00c9b1);
+      color: #00c9b1;
+      background: rgba(0,201,177,.1);
+    }
+    .fb-chip:hover { border-color: rgba(0,201,177,.4); color: rgba(255,255,255,.8); }
+    .fb-textarea {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 13px;
+      font-family: var(--ff-ui, 'Inter', sans-serif);
+      resize: vertical;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color .2s;
+    }
+    .fb-textarea:focus { border-color: var(--teal, #00c9b1); }
+    .fb-input {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+      font-family: var(--ff-ui, 'Inter', sans-serif);
+      transition: border-color .2s;
+    }
+    .fb-input:focus { border-color: var(--teal, #00c9b1); }
+    .fb-char-count {
+      text-align: right;
+      font-size: 11px;
+      color: rgba(255,255,255,.3);
+      margin: 4px 0 18px;
+    }
+    .rp-severity-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .rp-sev-label { font-size: 12px; color: rgba(255,255,255,.4); }
+    .rp-sev {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: rgba(255,255,255,.6);
+      cursor: pointer;
+    }
+    .rp-sev input { accent-color: #00c9b1; cursor: pointer; }
+    .fb-submit {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0,201,177,.18), rgba(123,47,255,.12));
+      border: 1px solid rgba(0,201,177,.35);
+      color: #00c9b1;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: .04em;
+    }
+    .fb-submit:hover {
+      background: linear-gradient(135deg, rgba(0,201,177,.3), rgba(123,47,255,.2));
+      color: #fff;
+      box-shadow: 0 0 24px rgba(0,201,177,.25);
+    }
+    .fb-submit:disabled { opacity: .45; cursor: not-allowed; }
+    .fb-msg {
+      text-align: center;
+      font-size: 13px;
+      min-height: 20px;
+      margin-top: 12px;
+    }
+    .fb-msg.ok { color: #00c9b1; }
+    .fb-msg.err { color: #ff6b6b; }
+    .fb-success-anim {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .fb-success-anim .fb-checkmark {
+      font-size: 48px;
+      animation: fb-pop .5s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes fb-pop { from { transform: scale(0) rotate(-15deg); opacity:0; } to { transform: scale(1) rotate(0deg); opacity:1; } }
+
     .btn-upgrade {
       border-color: rgba(159, 122, 234, .45);
       color: #c4a8ff;
@@ -1533,12 +1741,14 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+      z-index: 10;
     }
 
     #dlg-layer {
       position: absolute;
       inset: 0;
       pointer-events: none;
+      z-index: 20;
     }
 
     #scene-lbl {
@@ -4035,69 +4245,145 @@
       position: fixed;
       inset: 0;
       z-index: 1400;
-      background: rgba(4, 8, 15, .55);
       pointer-events: none;
       opacity: 0;
-      transition: opacity .35s;
+      transition: opacity .4s var(--ease);
     }
 
     #tour-overlay.active {
       opacity: 1;
+      pointer-events: all;
     }
 
-    #tour-tip {
+    /* Dark backdrop rendered via SVG — spotlight punched by JS */
+    #tour-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1400;
+      pointer-events: none;
+    }
+
+    /* Glowing ring around the highlighted element */
+    #tour-spotlight {
       position: fixed;
       z-index: 1401;
-      background: var(--surface);
-      border: 1px solid rgba(0, 201, 177, .35);
-      border-radius: 12px;
-      padding: 16px 18px 14px;
-      width: 280px;
-      box-shadow: 0 0 28px rgba(0, 201, 177, .15);
+      border-radius: 8px;
+      box-shadow: 0 0 0 9999px rgba(4,8,15,.72), 0 0 0 2px var(--teal), 0 0 20px 4px rgba(0,201,177,.35);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .35s var(--ease), top .35s var(--ease), left .35s var(--ease), width .35s var(--ease), height .35s var(--ease);
+    }
+
+    #tour-spotlight.active { opacity: 1; }
+
+    /* The tooltip card */
+    #tour-tip {
+      position: fixed;
+      z-index: 1402;
+      background: linear-gradient(135deg, #0d1b2e 0%, #0a1525 100%);
+      border: 1px solid rgba(0, 201, 177, .4);
+      border-radius: 14px;
+      padding: 20px 20px 16px;
+      width: 300px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.6), 0 0 0 1px rgba(0,201,177,.08), 0 0 32px rgba(0,201,177,.12);
       opacity: 0;
       pointer-events: none;
-      transition: opacity .3s, transform .3s;
-      transform: translateY(6px);
+      transition: opacity .3s var(--ease), transform .3s var(--ease);
+      transform: translateY(8px) scale(.97);
     }
 
     #tour-tip.active {
       opacity: 1;
       pointer-events: all;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
+    /* Directional arrow — toggled by JS */
     #tour-tip::before {
       content: '';
       position: absolute;
-      top: -6px;
-      left: 22px;
       width: 12px;
       height: 12px;
-      background: var(--surface);
-      border-left: 1px solid rgba(0, 201, 177, .35);
-      border-top: 1px solid rgba(0, 201, 177, .35);
+      background: #0d1b2e;
+      border-left: 1px solid rgba(0,201,177,.4);
+      border-top: 1px solid rgba(0,201,177,.4);
       transform: rotate(45deg);
+      transition: top .3s, bottom .3s, left .3s;
     }
 
-    .tour-step-badge {
+    #tour-tip[data-dir="below"]::before  { top: -7px; left: 24px; border-left: 1px solid rgba(0,201,177,.4); border-top: 1px solid rgba(0,201,177,.4); border-right: none; border-bottom: none; }
+    #tour-tip[data-dir="above"]::before  { bottom: -7px; left: 24px; top: auto; transform: rotate(225deg); border-left: 1px solid rgba(0,201,177,.4); border-top: 1px solid rgba(0,201,177,.4); border-right: none; border-bottom: none; }
+    #tour-tip[data-dir="right"]::before  { left: -7px; top: 20px; transform: rotate(-45deg); border-left: 1px solid rgba(0,201,177,.4); border-top: 1px solid rgba(0,201,177,.4); border-right: none; border-bottom: none; }
+    #tour-tip[data-dir="left"]::before   { right: -7px; left: auto; top: 20px; transform: rotate(135deg); border-left: 1px solid rgba(0,201,177,.4); border-top: 1px solid rgba(0,201,177,.4); border-right: none; border-bottom: none; }
+    #tour-tip[data-dir="center"]::before { display: none; }
+
+    /* Step header */
+    .tour-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tour-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(0,201,177,.12);
+      border: 1px solid rgba(0,201,177,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .tour-title {
+      font-family: var(--ff-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--text);
+    }
+
+    .tour-step-label {
       font-family: var(--ff-code);
       font-size: 9px;
       color: var(--teal);
-      letter-spacing: .1em;
-      margin-bottom: 8px;
+      letter-spacing: .12em;
+      opacity: .75;
     }
 
     .tour-body {
       font-family: var(--ff-story);
-      font-size: 12.5px;
+      font-size: 13px;
       color: var(--text-dim);
-      line-height: 1.55;
-      margin-bottom: 14px;
+      line-height: 1.6;
+      margin-bottom: 16px;
     }
 
     .tour-body strong {
-      color: var(--text-bright);
+      color: var(--text);
+      font-weight: 600;
     }
+
+    /* Progress dots */
+    .tour-progress {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .tour-dot {
+      width: 18px;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(0,201,177,.18);
+      transition: background .3s, width .3s;
+    }
+
+    .tour-dot.done  { background: rgba(0,201,177,.55); }
+    .tour-dot.active { background: var(--teal); width: 28px; }
 
     .tour-actions {
       display: flex;
@@ -4112,17 +4398,20 @@
       font-size: 9.5px;
       color: var(--text-muted);
       cursor: pointer;
+      transition: color .2s;
+      padding: 4px 0;
     }
 
-    #tour-skip:hover {
-      color: var(--text-dim);
-    }
+    #tour-skip:hover { color: var(--text-dim); }
 
     .tour-next-btn {
-      padding: 6px 14px;
-      background: rgba(0, 201, 177, .1);
-      border: 1px solid rgba(0, 201, 177, .3);
-      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      background: rgba(0, 201, 177, .12);
+      border: 1px solid rgba(0, 201, 177, .35);
+      border-radius: 7px;
       color: var(--teal);
       font-family: var(--ff-display);
       font-size: 10px;
@@ -4133,9 +4422,22 @@
     }
 
     .tour-next-btn:hover {
-      background: rgba(0, 201, 177, .18);
+      background: rgba(0, 201, 177, .22);
       border-color: var(--teal);
+      box-shadow: 0 0 12px rgba(0,201,177,.2);
     }
+
+    /* Welcome step (center modal) */
+    #tour-tip.welcome-mode {
+      width: 360px;
+      padding: 28px 28px 22px;
+      text-align: center;
+    }
+
+    #tour-tip.welcome-mode .tour-header { justify-content: center; flex-direction: column; gap: 6px; }
+    #tour-tip.welcome-mode .tour-icon { width: 48px; height: 48px; font-size: 22px; margin: 0 auto; }
+    #tour-tip.welcome-mode .tour-progress { justify-content: center; }
+    #tour-tip.welcome-mode .tour-actions { justify-content: center; gap: 12px; }
 
     /* ── SPLINE 3-D BACKGROUND ──────────────────────────── */
     #spline-bg {
@@ -5498,6 +5800,8 @@
             <div class="user-dropdown" id="user-dropdown">
               <button class="ud-item" id="ud-profile">👤 My Profile</button>
               <button class="ud-item" id="ud-gallery">🎞 My Gallery</button>
+              <button class="ud-item" id="ud-feedback">★ Rate &amp; Feedback</button>
+              <button class="ud-item" id="ud-report">⚑ Report Issue</button>
               <button class="ud-item" id="ud-admin" style="display:none">⚙ Admin</button>
               <button class="ud-item danger" id="ud-signout">Sign Out</button>
             </div>
@@ -5586,7 +5890,10 @@
       <!-- Compiler pane -->
       <div id="ins-compile" class="ins-pane">
         <div class="cp-wrap">
-          <div class="cp-label">Script (.story source)</div>
+          <div class="cp-label" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>Script (.story source)</span>
+            <button id="btn-view-prompt" class="btn-sm" style="display:none;background:rgba(255,255,255,0.05);color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);padding:4px 8px;font-size:10px;">View AI Prompt</button>
+          </div>
           <textarea id="script-input" spellcheck="false">SCENE Forest
 CHARACTER Hero
 CHARACTER Villain
@@ -6203,7 +6510,7 @@ EXIT Villain</textarea>
   <!-- ── HEADER ── -->
   <div class="adm-header">
     <div class="adm-header-left">
-      <div class="adm-logo-mark">P</div>
+      <img src="/favicon.png" style="width:32px;height:32px;border-radius:8px;box-shadow:0 0 16px rgba(0,201,177,.3);flex-shrink:0;">
       <div>
         <div class="adm-logo-text">Parsia</div>
         <div class="adm-logo-sub">Admin Console</div>
@@ -6215,6 +6522,7 @@ EXIT Villain</textarea>
         <div class="adm-avatar" id="adm-avatar-icon">A</div>
         <span id="adm-whoami" style="font-size:11px;color:#8aa0c0">admin</span>
       </div>
+      <button class="adm-logout" id="adm-back-studio" style="background:var(--adm-teal);color:var(--void);border:none;margin-right:8px;">Studio</button>
       <button class="adm-logout" id="adm-logout">Sign Out</button>
     </div>
   </div>
@@ -6232,6 +6540,12 @@ EXIT Villain</textarea>
       </div>
       <div class="adm-nav" data-admsec="audit">
         <span class="adm-nav-icon">◎</span> Audit Log
+      </div>
+      <div class="adm-nav" data-admsec="feedback">
+        <span class="adm-nav-icon">★</span> Feedback
+      </div>
+      <div class="adm-nav" data-admsec="reports">
+        <span class="adm-nav-icon">⚑</span> Reports
       </div>
 
       <div class="adm-sidebar-footer">
@@ -6402,6 +6716,43 @@ EXIT Villain</textarea>
         </div>
       </div>
 
+      <!-- FEEDBACK SECTION -->
+      <div class="adm-section" id="adm-sec-feedback">
+        <div class="adm-page-header">
+          <div class="adm-page-title">User Feedback &amp; Ratings</div>
+          <div class="adm-page-sub">Star ratings and comments submitted by users</div>
+        </div>
+        <div class="adm-glass" style="margin-bottom:18px;">
+          <div class="adm-glass-header">
+            <div class="adm-glass-title">Average Rating</div>
+            <div id="adm-fb-avg" style="font-size:22px;font-weight:800;color:#ffc107;">—</div>
+          </div>
+          <div id="adm-fb-breakdown" style="display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 16px;"></div>
+        </div>
+        <div class="adm-glass">
+          <div class="adm-glass-header">
+            <div class="adm-glass-title">All Feedback</div>
+            <button class="adm-action-btn" onclick="admLoadFeedback()">↻ Refresh</button>
+          </div>
+          <div id="adm-fb-list" style="padding:0 20px 16px;"></div>
+        </div>
+      </div>
+
+      <!-- REPORTS SECTION -->
+      <div class="adm-section" id="adm-sec-reports">
+        <div class="adm-page-header">
+          <div class="adm-page-title">Issue Reports</div>
+          <div class="adm-page-sub">Bug reports and issues submitted by users</div>
+        </div>
+        <div class="adm-glass">
+          <div class="adm-glass-header">
+            <div class="adm-glass-title">Open Reports</div>
+            <button class="adm-action-btn" onclick="admLoadReports()">↻ Refresh</button>
+          </div>
+          <div id="adm-rp-list" style="padding:0 20px 16px;"></div>
+        </div>
+      </div>
+
     </div><!-- /adm-main -->
   </div><!-- /adm-body -->
   </div>
@@ -6468,13 +6819,87 @@ EXIT Villain</textarea>
   </div>
 
   <!-- ═══════════════ ONBOARDING TOUR ═══════════════ -->
-  <div id="tour-overlay"></div>
-  <div id="tour-tip">
-    <div class="tour-step-badge" id="tour-step-badge">1 / 5</div>
+  <div id="tour-overlay">
+    <div id="tour-spotlight"></div>
+  </div>
+  <div id="tour-tip" data-dir="below">
+    <div class="tour-header">
+      <div class="tour-icon" id="tour-icon">🎬</div>
+      <div>
+        <div class="tour-title" id="tour-title">Welcome</div>
+        <div class="tour-step-label" id="tour-step-badge">STEP 1 OF 6</div>
+      </div>
+    </div>
+    <div class="tour-progress" id="tour-progress"></div>
     <div class="tour-body" id="tour-body"></div>
     <div class="tour-actions">
       <button id="tour-skip">Skip tour</button>
       <button id="tour-next" class="tour-next-btn">Next →</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ FEEDBACK & RATING MODAL ═══════════════ -->
+  <div id="feedback-modal" class="fb-overlay">
+    <div class="fb-card">
+      <button class="fb-close" id="fb-close">✕</button>
+      <div class="fb-icon">★</div>
+      <h2 class="fb-title">Rate Parsia</h2>
+      <p class="fb-sub">How's your experience? Your feedback shapes the next version.</p>
+      <!-- Star rating -->
+      <div class="fb-stars" id="fb-stars">
+        <span class="fb-star" data-val="1">★</span>
+        <span class="fb-star" data-val="2">★</span>
+        <span class="fb-star" data-val="3">★</span>
+        <span class="fb-star" data-val="4">★</span>
+        <span class="fb-star" data-val="5">★</span>
+      </div>
+      <div class="fb-star-label" id="fb-star-label">Tap to rate</div>
+      <!-- Category chips -->
+      <div class="fb-chips" id="fb-chips">
+        <button class="fb-chip" data-cat="general">General</button>
+        <button class="fb-chip" data-cat="ui">UI/UX</button>
+        <button class="fb-chip" data-cat="compiler">Compiler</button>
+        <button class="fb-chip" data-cat="animation">Animation</button>
+        <button class="fb-chip" data-cat="performance">Performance</button>
+        <button class="fb-chip" data-cat="feature">Feature Request</button>
+      </div>
+      <textarea class="fb-textarea" id="fb-text" placeholder="Tell us more… (optional)" maxlength="1000"></textarea>
+      <div class="fb-char-count"><span id="fb-char-n">0</span> / 1000</div>
+      <button class="fb-submit" id="fb-submit">Send Feedback</button>
+      <div class="fb-msg" id="fb-msg"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ REPORT ISSUE MODAL ═══════════════ -->
+  <div id="report-modal" class="fb-overlay">
+    <div class="fb-card">
+      <button class="fb-close" id="rp-close">✕</button>
+      <div class="fb-icon" style="background:rgba(255,107,107,.12);color:#ff6b6b;">⚑</div>
+      <h2 class="fb-title">Report an Issue</h2>
+      <p class="fb-sub">Found a bug or something broken? Let us know and we'll fix it.</p>
+      <!-- Issue type -->
+      <div class="fb-chips" id="rp-chips">
+        <button class="fb-chip" data-cat="bug">🐛 Bug</button>
+        <button class="fb-chip" data-cat="crash">💥 Crash</button>
+        <button class="fb-chip" data-cat="ui_glitch">🎨 UI Glitch</button>
+        <button class="fb-chip" data-cat="compiler_error">⚙ Compiler Error</button>
+        <button class="fb-chip" data-cat="auth">🔒 Auth Problem</button>
+        <button class="fb-chip" data-cat="other">📋 Other</button>
+      </div>
+      <input class="fb-input" id="rp-title" type="text" placeholder="Short summary of the issue" maxlength="120">
+      <textarea class="fb-textarea" id="rp-text" placeholder="Describe what happened, steps to reproduce, expected vs actual behaviour…" maxlength="2000"></textarea>
+      <div class="fb-char-count"><span id="rp-char-n">0</span> / 2000</div>
+      <!-- Severity -->
+      <div class="rp-severity-row">
+        <span class="rp-sev-label">Severity:</span>
+        <label class="rp-sev"><input type="radio" name="rp-sev" value="low"> Low</label>
+        <label class="rp-sev"><input type="radio" name="rp-sev" value="medium" checked> Medium</label>
+        <label class="rp-sev"><input type="radio" name="rp-sev" value="high"> High</label>
+        <label class="rp-sev"><input type="radio" name="rp-sev" value="critical"> Critical</label>
+      </div>
+      <button class="fb-submit" id="rp-submit" style="border-color:rgba(255,107,107,.4);color:#ff8a8a;">Submit Report</button>
+      <div class="fb-msg" id="rp-msg"></div>
     </div>
   </div>
 
@@ -6534,6 +6959,7 @@ EXIT Villain</textarea>
     .pp-danger-btn:hover { background: rgba(255,107,107,.2); box-shadow: 0 0 12px rgba(255,107,107,.2); }
   </style>
   <div class="pp-header">
+
     <div class="pp-brand">
       <svg width="24" height="24" viewBox="0 0 26 26" fill="none"><defs><linearGradient id="ppblg" x1="0" y1="0" x2="26" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#00c9b1"/><stop offset="1" stop-color="#0077b6"/></linearGradient></defs><rect x="2" y="7" width="22" height="17" rx="3" fill="#0d1b2a" stroke="url(#ppblg)" stroke-width=".8"/><rect x="1" y="2.5" width="14" height="5" rx="1.2" fill="#0a1f2e" stroke="url(#ppblg)" stroke-width=".5"/><text x="4" y="20" font-size="8" fill="white" opacity=".8" font-family="monospace">{&lt;&gt;}</text></svg>
       PARSIA · My Profile
@@ -7749,6 +8175,7 @@ EXIT Villain</textarea>
        CHARACTER ASSETS
     ────────────────────────────────────────── */
     const EMOTES = { neutral: '😐', happy: '😄', sad: '😢', angry: '😠', scared: '😨', thinking: '🤔', surprised: '😲', laughing: '😂', love: '😍', confused: '😕', evil: '😈', tired: '😴', wave: '👋', jump: '🦘' };
+    const _esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
     function heroSVG(c) {
       return `<svg viewBox="0 0 76 114" fill="none">
@@ -8255,7 +8682,7 @@ EXIT Villain</textarea>
         if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         const a = this.actions[n];
         document.getElementById('cur-action').innerHTML = a
-          ? `<span style="color:var(--teal)">${a.type}</span>${a.who ? ` <span style="color:#60b8ff">${a.who}</span>` : ''}${a.text ? `<br><span style="color:var(--text-muted);font-style:italic">"${a.text}"</span>` : ''}${a.emotion ? ` <span style="color:#b07aff">${a.emotion}</span>` : ''}${a.dir ? ` <span style="color:#ffc000">${a.dir}×${a.steps}</span>` : ''}${a.duration ? ` <span style="color:#888">${a.duration}s</span>` : ''}`
+          ? `<span style="color:var(--teal)">${_esc(a.type)}</span>${a.who ? ` <span style="color:#60b8ff">${_esc(a.who)}</span>` : ''}${a.text ? `<br><span style="color:var(--text-muted);font-style:italic">"${_esc(a.text)}"</span>` : ''}${a.emotion ? ` <span style="color:#b07aff">${_esc(a.emotion)}</span>` : ''}${a.dir ? ` <span style="color:#ffc000">${_esc(a.dir)}×${_esc(a.steps)}</span>` : ''}${a.duration ? ` <span style="color:#888">${_esc(a.duration)}s</span>` : ''}`
           : 'End of story';
       }
       _syncChars() {
@@ -8265,7 +8692,7 @@ EXIT Villain</textarea>
         Object.entries(this.chars).forEach(([name, c]) => {
           const card = document.createElement('div');
           card.className = 'char-card' + (c.live ? ' live' : '');
-          card.innerHTML = `<div class="char-dot"></div><div class="char-card-name">${name}</div><div class="char-card-right"><span class="char-card-emote">${EMOTES[c.emotion] || '😐'}</span><span class="char-card-pos">${c.live ? Math.round(c.pos) + '%' : 'offstage'}</span></div>`;
+          card.innerHTML = `<div class="char-dot"></div><div class="char-card-name">${_esc(name)}</div><div class="char-card-right"><span class="char-card-emote">${EMOTES[c.emotion] || '😐'}</span><span class="char-card-pos">${c.live ? Math.round(c.pos) + '%' : 'offstage'}</span></div>`;
           list.appendChild(card);
         });
       }
@@ -9051,10 +9478,10 @@ EXIT Villain</textarea>
         const totalActions = engine.story.actions.length;
         const pollInterval = setInterval(() => {
           if (this.cancelled) { clearInterval(pollInterval); return; }
-          const pct = Math.round((engine.cursor / Math.max(1, totalActions)) * 100);
+          const pct = Math.round((engine.idx / Math.max(1, totalActions)) * 100);
           fill.style.width = Math.min(pct, 95) + '%';
           label.textContent = `Recording… ${Math.min(pct, 95)}%`;
-          if (engine.cursor >= totalActions && !engine.running) {
+          if (engine.idx >= totalActions && !engine.running) {
             clearInterval(pollInterval);
             fill.style.width = '100%';
             label.textContent = 'Finalizing…';
@@ -9188,71 +9615,159 @@ EXIT Villain</textarea>
     const Tour = (function () {
       const STEPS = [
         {
+          anchor: null,
+          dir: 'center',
+          icon: '✦',
+          title: 'Welcome to Parsia',
+          body: `You're about to create <strong>living 2.5D animations</strong> from plain English. This quick tour will show you everything you need to get started in under a minute.`,
+        },
+        {
           anchor: '#btn-demo',
-          body: `Welcome to <strong>Parsia Studio</strong>! Click <strong>▶ Demo Story</strong> to instantly load a pre-built animation and see the engine in action.`,
-          position: 'below-left',
+          dir: 'below',
+          icon: '▶',
+          title: 'Try the Demo',
+          body: `Hit <strong>▶ Demo Story</strong> to load a pre-built animation instantly — great for seeing what Parsia can do before writing your own.`,
         },
         {
-          anchor: '#enter-btn',
-          body: `Click the glowing button on the intro screen — or use <strong>Ctrl+Enter</strong> from anywhere — to open the Story Editor where you write your own narrative.`,
-          position: 'below-left',
+          anchor: '#hdr',
+          dir: 'below',
+          icon: '✍',
+          title: 'Write Your Story',
+          body: `Click <strong>New Story</strong> (or press <kbd style="font-family:var(--ff-code);font-size:10px;padding:1px 5px;border:1px solid rgba(0,201,177,.3);border-radius:3px">Ctrl+Enter</kbd>) to open the Story Editor. Type in plain English — the AI translates it into the <code style="font-family:var(--ff-code);font-size:11px;color:var(--teal)">.story</code> DSL automatically.`,
         },
         {
-          anchor: '#btn-sound',
-          body: `Toggle <strong>ambient audio</strong> to add atmospheric sound that matches your scene — forest birds, castle echoes, city hum.`,
-          position: 'below-left',
+          anchor: '#ins',
+          dir: 'left',
+          icon: '⚙',
+          title: 'Compiler Panel',
+          body: `The right panel has three tabs: <strong>Stage</strong> shows live character state, <strong>Compiler</strong> lets you edit and run the raw script, and <strong>Editor</strong> lets you drag-reorder actions.`,
         },
         {
-          anchor: '.ins-tab[data-tab="editor"]',
-          body: `The <strong>Editor tab</strong> lets you rearrange, edit, or delete individual animation actions — drag rows to reorder them, then hit Apply.`,
-          position: 'below-left',
+          anchor: '#tl',
+          dir: 'above',
+          icon: '⏯',
+          title: 'Playback Controls',
+          body: `Use <strong>Play / Pause</strong>, step forward/back, and the speed slider to review your animation. The progress bar shows which action is running.`,
         },
         {
           anchor: '#btn-export',
-          body: `When your animation is ready, hit <strong>⬇ Export</strong> to save it as a WebM video or animation JSON. Press <strong>?</strong> anytime for keyboard shortcuts.`,
-          position: 'below-left',
+          dir: 'below',
+          icon: '⬇',
+          title: 'Export & Share',
+          body: `When you're happy, hit <strong>⬇ Export</strong> to download as WebM video or JSON. Press <kbd style="font-family:var(--ff-code);font-size:10px;padding:1px 5px;border:1px solid rgba(0,201,177,.3);border-radius:3px">?</kbd> anytime for all keyboard shortcuts.`,
         },
       ];
 
       let current = 0;
-      const overlay = document.getElementById('tour-overlay');
-      const tip = document.getElementById('tour-tip');
-      const badge = document.getElementById('tour-step-badge');
-      const body = document.getElementById('tour-body');
-      const btnNext = document.getElementById('tour-next');
-      const btnSkip = document.getElementById('tour-skip');
+      const overlay   = document.getElementById('tour-overlay');
+      const spotlight = document.getElementById('tour-spotlight');
+      const tip       = document.getElementById('tour-tip');
+      const iconEl    = document.getElementById('tour-icon');
+      const titleEl   = document.getElementById('tour-title');
+      const badge     = document.getElementById('tour-step-badge');
+      const progress  = document.getElementById('tour-progress');
+      const body      = document.getElementById('tour-body');
+      const btnNext   = document.getElementById('tour-next');
+      const btnSkip   = document.getElementById('tour-skip');
 
-      function position(anchorSel) {
+      function buildDots(idx) {
+        progress.innerHTML = '';
+        STEPS.forEach((_, i) => {
+          const d = document.createElement('div');
+          d.className = 'tour-dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+          progress.appendChild(d);
+        });
+      }
+
+      function positionTip(anchorSel, dir) {
+        const pad = 12;
+        const tw = parseInt(getComputedStyle(tip).width) || 300;
+
+        if (!anchorSel || dir === 'center') {
+          tip.style.top  = '50%';
+          tip.style.left = '50%';
+          tip.style.transform = 'translate(-50%,-50%) scale(1)';
+          spotlight.classList.remove('active');
+          return;
+        }
+
+        tip.style.transform = '';
         const el = document.querySelector(anchorSel);
-        if (!el) return;
+        if (!el) { spotlight.classList.remove('active'); return; }
+
         const r = el.getBoundingClientRect();
-        tip.style.top = (r.bottom + 12) + 'px';
-        tip.style.left = Math.max(8, Math.min(r.left, window.innerWidth - 296)) + 'px';
+
+        /* spotlight */
+        spotlight.style.top    = (r.top    - 6) + 'px';
+        spotlight.style.left   = (r.left   - 6) + 'px';
+        spotlight.style.width  = (r.width  + 12) + 'px';
+        spotlight.style.height = (r.height + 12) + 'px';
+        spotlight.classList.add('active');
+
+        /* tooltip */
+        const tipH = tip.offsetHeight || 200;
+        if (dir === 'below') {
+          tip.style.top  = (r.bottom + pad) + 'px';
+          tip.style.left = Math.max(8, Math.min(r.left, window.innerWidth - tw - 8)) + 'px';
+        } else if (dir === 'above') {
+          tip.style.top  = (r.top - tipH - pad) + 'px';
+          tip.style.left = Math.max(8, Math.min(r.left, window.innerWidth - tw - 8)) + 'px';
+        } else if (dir === 'left') {
+          tip.style.top  = Math.max(8, r.top) + 'px';
+          tip.style.left = (r.left - tw - pad) + 'px';
+        } else if (dir === 'right') {
+          tip.style.top  = Math.max(8, r.top) + 'px';
+          tip.style.left = (r.right + pad) + 'px';
+        }
       }
 
       function show(idx) {
         if (idx >= STEPS.length) { end(); return; }
         current = idx;
         const s = STEPS[idx];
-        badge.textContent = (idx + 1) + ' / ' + STEPS.length;
-        body.innerHTML = s.body;
+
+        iconEl.textContent  = s.icon;
+        titleEl.textContent = s.title;
+        badge.textContent   = 'STEP ' + (idx + 1) + ' OF ' + STEPS.length;
+        body.innerHTML      = s.body;
         btnNext.textContent = idx === STEPS.length - 1 ? 'Done ✓' : 'Next →';
+        tip.setAttribute('data-dir', s.dir || 'below');
+
+        if (s.dir === 'center') {
+          tip.classList.add('welcome-mode');
+        } else {
+          tip.classList.remove('welcome-mode');
+        }
+
+        buildDots(idx);
         overlay.classList.add('active');
         tip.classList.add('active');
-        position(s.anchor);
+
+        /* position after paint so tip dimensions are known */
+        requestAnimationFrame(() => positionTip(s.anchor, s.dir));
       }
 
       function end() {
         overlay.classList.remove('active');
+        spotlight.classList.remove('active');
         tip.classList.remove('active');
         localStorage.setItem('parsia_onboarded', '1');
+        document.removeEventListener('keydown', keyHandler);
+      }
+
+      function keyHandler(e) {
+        if (e.key === 'Escape') { end(); }
+        if (e.key === 'ArrowRight' || e.key === 'Enter') { show(current + 1); }
       }
 
       btnNext.addEventListener('click', () => show(current + 1));
       btnSkip.addEventListener('click', end);
 
       return {
-        start() { show(0); },
+        start() {
+          document.addEventListener('keydown', keyHandler);
+          show(0);
+        },
         started: false,
         maybeStart() {
           if (!localStorage.getItem('parsia_onboarded') && !this.started) {
@@ -9530,10 +10045,10 @@ EXIT Villain</textarea>
         const capturer = setInterval(() => {
           gif.addFrame(canvas, { copy: true, delay: frameInterval });
           frameCount++;
-          const pct = Math.round((engine.cursor / Math.max(1, totalActions)) * 90);
+          const pct = Math.round((engine.idx / Math.max(1, totalActions)) * 90);
           fill.style.width = pct + '%';
           label.textContent = `Capturing frames… ${frameCount}`;
-          if (frameCount >= maxFrames || (engine.cursor >= totalActions && !engine.running)) {
+          if (frameCount >= maxFrames || (engine.idx >= totalActions && !engine.running)) {
             clearInterval(capturer);
             resolve();
           }
@@ -9544,13 +10059,28 @@ EXIT Villain</textarea>
       label.textContent = 'Encoding GIF…';
 
       gif.on('progress', p => { fill.style.width = (92 + p * 8) + '%'; });
-      gif.on('finished', blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = (engine.story.scene || 'parsia') + '_animation.gif';
-        a.click(); URL.revokeObjectURL(url);
+      gif.on('error', err => {
+        console.error('[GIF Export Error]', err);
         ExportManager.close();
-        showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
+        showToastGlobal('GIF encoding failed: ' + (err.message || 'unknown error'), 'err');
+      });
+      gif.on('finished', blob => {
+        try {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = (engine.story.scene || 'parsia') + '_animation.gif';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+          ExportManager.close();
+          showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
+        } catch (e) {
+          console.error('[GIF Download Error]', e);
+          ExportManager.close();
+          showToastGlobal('Failed to download GIF: ' + e.message, 'err');
+        }
       });
       gif.render();
     }, { once: false });
@@ -10097,12 +10627,49 @@ EXIT Villain</textarea>
           }
 
           compiledResult = output;
+          window._parsiaLastStory = englishText; // Store for contextual view
+          
+          /* Sync DSL to Compiler Tab */
+          const scriptInp = document.getElementById('script-input');
+          if (scriptInp) {
+            scriptInp.value = parsiaSource;
+            /* Append a success marker to Compiler Output */
+            const co = document.getElementById('compile-output');
+            if (co) {
+              const marker = document.createElement('div');
+              marker.className = 'co-info';
+              marker.innerHTML = `<span style="color:var(--teal)">✓ AI Synchronized:</span> ${new Date().toLocaleTimeString()} · Source updated.`;
+              co.prepend(marker);
+            }
+          }
+
           setProgress(100);
           addDivider();
           await sleep(100);
           await typewrite(addRow('', 'dt-phase-ok'),
             `✅  Animation ready!  Scene: ${output.scene}  ·  ${output.characters.length} character(s)  ·  ${output.actions.length} actions`,
             lineDelay);
+
+          /* Add button to view original prompt inside compiler tab */
+          const viewPromptBtn = document.getElementById('btn-view-prompt');
+          if (viewPromptBtn) {
+            viewPromptBtn.style.display = 'block';
+            viewPromptBtn.onclick = () => {
+              const overlay = document.createElement('div');
+              overlay.style = 'position:fixed;inset:0;z-index:9000;background:rgba(2,6,15,0.85);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;';
+              overlay.innerHTML = `
+                <div style="background:var(--surface);border:1px solid var(--g-border);border-radius:18px;width:100%;max-width:500px;padding:32px;box-shadow:0 20px 80px rgba(0,0,0,0.6);position:relative;">
+                  <button style="position:absolute;top:20px;right:20px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;" onclick="this.parentElement.parentElement.remove()">✕</button>
+                  <div style="font-size:11px;color:var(--teal);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;font-weight:700;">Original English Story</div>
+                  <div style="font-family:var(--ff-story);font-size:18px;line-height:1.6;color:var(--text);white-space:pre-wrap;max-height:400px;overflow-y:auto;padding-right:10px;">${_esc(englishText)}</div>
+                  <div style="margin-top:24px;display:flex;justify-content:flex-end;">
+                    <button style="padding:10px 24px;background:var(--teal);color:var(--void);border:none;border-radius:8px;font-weight:700;cursor:pointer;" onclick="this.parentElement.parentElement.remove()">CLOSE</button>
+                  </div>
+                </div>
+              `;
+              document.body.appendChild(overlay);
+            };
+          }
 
           status.className = 'dt-status done';
           status.textContent = '● READY';
@@ -10571,7 +11138,9 @@ EXIT Villain</textarea>
         authToken = null;
         localStorage.removeItem('parsia_token');
         applyUser(null);
-        showToast('Signed out', 'ok');
+        document.getElementById('app').classList.remove('visible');
+        document.getElementById('landing').style.display = 'block';
+        location.reload();
       });
 
       document.getElementById('ud-gallery')?.addEventListener('click', () => {
@@ -10820,7 +11389,7 @@ EXIT Villain</textarea>
 
       function admFetch(path, opts = {}) {
         return fetch(AUTH_API + '/auth' + path, {
-          headers: { 'X-Admin-Key': 'parsia-admin-2024', 'Authorization': 'Bearer ' + authToken, ...(opts.headers || {}) },
+          headers: { 'Authorization': 'Bearer ' + authToken, ...(opts.headers || {}) },
           ...opts,
         }).then(async r => {
           const d = await r.json();
@@ -10875,6 +11444,8 @@ EXIT Villain</textarea>
         if (el) el.classList.add('active');
         document.querySelector(`.adm-nav[data-admsec="${sec}"]`)?.classList.add('active');
         if (sec === 'audit') admLoadAudit();
+        if (sec === 'feedback') admLoadFeedback();
+        if (sec === 'reports') admLoadReports();
       }
 
       document.querySelectorAll('.adm-nav').forEach(n => {
@@ -10888,6 +11459,11 @@ EXIT Villain</textarea>
         adminPanel.style.display = 'none';
         document.getElementById('landing').style.display = '';
         location.reload();
+      });
+
+      document.getElementById('adm-back-studio')?.addEventListener('click', () => {
+        adminPanel.style.display = 'none';
+        document.getElementById('app').style.display = 'flex';
       });
 
       const adminBtn = document.getElementById('ud-admin');
@@ -11119,6 +11695,67 @@ EXIT Villain</textarea>
         }
       }
 
+      /* ── FEEDBACK & REPORTS (admin view) ─────────────── */
+      window.admLoadFeedback = async function () {
+        const list = document.getElementById('adm-fb-list');
+        const avg  = document.getElementById('adm-fb-avg');
+        const breakdown = document.getElementById('adm-fb-breakdown');
+        list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--adm-muted)">Loading…</div>';
+        try {
+          const data = await fetch(AUTH_API + '/admin/feedback').then(r => r.json());
+          if (!data.length) { list.innerHTML = '<div class="adm-empty"><div class="adm-empty-icon">★</div>No feedback yet.</div>'; return; }
+          const totalRating = data.reduce((s, f) => s + f.rating, 0);
+          const avgVal = (totalRating / data.length).toFixed(1);
+          avg.textContent = '★ ' + avgVal + ' / 5';
+          const counts = [0,0,0,0,0];
+          data.forEach(f => { counts[f.rating - 1]++; });
+          breakdown.innerHTML = [5,4,3,2,1].map(n => {
+            const pct = data.length ? Math.round(counts[n-1]/data.length*100) : 0;
+            return `<div style="flex:1;min-width:80px;text-align:center"><div style="font-size:12px;color:#ffc107;margin-bottom:4px">${'★'.repeat(n)}</div><div style="height:6px;background:rgba(255,255,255,.08);border-radius:4px;margin-bottom:4px"><div style="height:100%;width:${pct}%;background:#ffc107;border-radius:4px;transition:width .5s"></div></div><div style="font-size:10px;color:var(--adm-muted)">${counts[n-1]} (${pct}%)</div></div>`;
+          }).join('');
+          const CATICON = {general:'💬',ui:'🎨',compiler:'⚙',animation:'🎬',performance:'⚡',feature:'✨'};
+          list.innerHTML = data.map(f => `
+            <div style="padding:14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:4px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="color:#ffc107;font-size:16px">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</span>
+                <span style="background:rgba(255,255,255,.07);border-radius:10px;padding:2px 10px;font-size:10.5px;color:rgba(255,255,255,.55)">${CATICON[f.category]||'💬'} ${f.category}</span>
+                <span style="margin-left:auto;font-size:10px;color:var(--adm-muted)">${new Date(f.created_at).toLocaleString()}</span>
+              </div>
+              ${f.message ? `<div style="font-size:12.5px;color:rgba(255,255,255,.75);margin-top:2px;line-height:1.5">"${f.message.replace(/</g,'&lt;')}"</div>` : ''}
+              ${f.user_email ? `<div style="font-size:11px;color:var(--adm-muted)">${f.user_email}</div>` : ''}
+            </div>`).join('');
+        } catch(e) {
+          list.innerHTML = `<div class="adm-empty" style="color:var(--adm-red)">${e.message}</div>`;
+        }
+      };
+
+      window.admLoadReports = async function () {
+        const list = document.getElementById('adm-rp-list');
+        list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--adm-muted)">Loading…</div>';
+        try {
+          const data = await fetch(AUTH_API + '/admin/reports').then(r => r.json());
+          if (!data.length) { list.innerHTML = '<div class="adm-empty"><div class="adm-empty-icon">⚑</div>No reports yet.</div>'; return; }
+          const SEV_COLOR = {low:'#4ae06a',medium:'#ffc107',high:'#ff8a40',critical:'#ff4d6d'};
+          const CAT_ICON  = {bug:'🐛',crash:'💥',ui_glitch:'🎨',compiler_error:'⚙',auth:'🔒',other:'📋'};
+          list.innerHTML = data.map(r => `
+            <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,.05);">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="font-size:14px">${CAT_ICON[r.category]||'📋'}</span>
+                <span style="font-weight:600;color:#fff;font-size:13px">${r.title.replace(/</g,'&lt;')}</span>
+                <span style="margin-left:auto;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;background:${SEV_COLOR[r.severity]+'22'};color:${SEV_COLOR[r.severity]};border:1px solid ${SEV_COLOR[r.severity]+'44'}">${r.severity.toUpperCase()}</span>
+              </div>
+              <div style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:6px">${r.body.replace(/</g,'&lt;').slice(0,300)}${r.body.length>300?'…':''}</div>
+              <div style="display:flex;gap:14px;font-size:10.5px;color:var(--adm-muted)">
+                ${r.user_email?`<span>👤 ${r.user_email}</span>`:''}
+                <span>${new Date(r.created_at).toLocaleString()}</span>
+                <span style="margin-left:auto;padding:2px 8px;border-radius:8px;background:rgba(0,201,177,.1);color:#00c9b1;font-size:10px">${r.status}</span>
+              </div>
+            </div>`).join('');
+        } catch(e) {
+          list.innerHTML = `<div class="adm-empty" style="color:var(--adm-red)">${e.message}</div>`;
+        }
+      };
+
       /* ── STRIPE CHECKOUT ───────────────────────────────── */
       async function startStripeCheckout(plan) {
         if (!currentUser) {
@@ -11284,6 +11921,180 @@ EXIT Villain</textarea>
       observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
       window.addEventListener('resize', () => { if (running) resize(); });
     })();
+
+  /* ══════════════════════════════════════════════════════
+     FEEDBACK, RATING & REPORT ISSUE MODULE
+  ══════════════════════════════════════════════════════ */
+  (function () {
+    const FB_API = (document.getElementById('sm-api-url')?.value || 'http://localhost:8000').trim();
+    const STAR_LABELS = ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent!'];
+
+    /* ── Modal open/close helpers ── */
+    function openModal(id) { document.getElementById(id)?.classList.add('visible'); }
+    function closeModal(id) { document.getElementById(id)?.classList.remove('visible'); }
+
+    /* ── FAB & dropdown triggers ── */
+
+    document.getElementById('ud-feedback')?.addEventListener('click', () => {
+      document.getElementById('user-dropdown')?.classList.remove('open');
+      openModal('feedback-modal');
+    });
+    document.getElementById('ud-report')?.addEventListener('click', () => {
+      document.getElementById('user-dropdown')?.classList.remove('open');
+      openModal('report-modal');
+    });
+
+    /* Close on backdrop click */
+    document.getElementById('feedback-modal')?.addEventListener('click', e => { if (e.target.id === 'feedback-modal') closeModal('feedback-modal'); });
+    document.getElementById('report-modal')?.addEventListener('click', e => { if (e.target.id === 'report-modal') closeModal('report-modal'); });
+    document.getElementById('fb-close')?.addEventListener('click', () => closeModal('feedback-modal'));
+    document.getElementById('rp-close')?.addEventListener('click', () => closeModal('report-modal'));
+
+    /* ────────────────────────────────────────────
+       FEEDBACK MODAL LOGIC
+    ──────────────────────────────────────────── */
+    let fbRating = 0;
+    let fbCategory = '';
+    const stars = document.querySelectorAll('.fb-star');
+    const starLabel = document.getElementById('fb-star-label');
+
+    function setStars(val) {
+      fbRating = val;
+      stars.forEach(s => s.classList.toggle('active', +s.dataset.val <= val));
+      starLabel.textContent = STAR_LABELS[val] || 'Tap to rate';
+    }
+
+    stars.forEach(s => {
+      s.addEventListener('click', () => setStars(+s.dataset.val));
+      s.addEventListener('mouseenter', () => {
+        stars.forEach(ss => ss.classList.toggle('active', +ss.dataset.val <= +s.dataset.val));
+      });
+      s.addEventListener('mouseleave', () => setStars(fbRating));
+    });
+
+    /* Category chip selection (single) */
+    document.querySelectorAll('#fb-chips .fb-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#fb-chips .fb-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.toggle('selected', true);
+        fbCategory = chip.dataset.cat;
+      });
+    });
+
+    /* Char counter */
+    const fbText = document.getElementById('fb-text');
+    const fbCharN = document.getElementById('fb-char-n');
+    fbText?.addEventListener('input', () => { fbCharN.textContent = fbText.value.length; });
+
+    /* Submit feedback */
+    document.getElementById('fb-submit')?.addEventListener('click', async () => {
+      if (!fbRating) {
+        showFbMsg('fb-msg', 'Please select a star rating.', 'err');
+        return;
+      }
+      const text = fbText?.value.trim() || '';
+      const btn = document.getElementById('fb-submit');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      const payload = {
+        rating: fbRating,
+        category: fbCategory || 'general',
+        message: text,
+        user_email: window._parsiaUser?.email || '',
+        page_url: location.href,
+      };
+
+      try {
+        const res = await fetch(FB_API + '/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Server error');
+      } catch (_) {
+        /* Save locally if backend unreachable */
+        const saved = JSON.parse(localStorage.getItem('parsia_feedback') || '[]');
+        saved.push({ ...payload, submitted_at: new Date().toISOString() });
+        localStorage.setItem('parsia_feedback', JSON.stringify(saved));
+      }
+
+      /* Show success */
+      const card = document.querySelector('#feedback-modal .fb-card');
+      card.innerHTML = `<div class="fb-success-anim"><div class="fb-checkmark">🎉</div><h2 class="fb-title" style="margin-top:16px">Thanks for your feedback!</h2><p class="fb-sub">Your ${fbRating}-star rating helps us improve Parsia.</p><button class="fb-submit" style="margin-top:24px" onclick="document.getElementById('feedback-modal').classList.remove('visible')">Close</button></div>`;
+    });
+
+    /* ────────────────────────────────────────────
+       REPORT ISSUE MODAL LOGIC
+    ──────────────────────────────────────────── */
+    let rpCategory = '';
+
+    /* Category chip selection */
+    document.querySelectorAll('#rp-chips .fb-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#rp-chips .fb-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        rpCategory = chip.dataset.cat;
+      });
+    });
+
+    /* Char counter */
+    const rpText = document.getElementById('rp-text');
+    const rpCharN = document.getElementById('rp-char-n');
+    rpText?.addEventListener('input', () => { rpCharN.textContent = rpText.value.length; });
+
+    /* Submit report */
+    document.getElementById('rp-submit')?.addEventListener('click', async () => {
+      const title = document.getElementById('rp-title')?.value.trim();
+      const body  = rpText?.value.trim();
+      const sev   = document.querySelector('input[name="rp-sev"]:checked')?.value || 'medium';
+
+      if (!title) { showFbMsg('rp-msg', 'Please add a short summary.', 'err'); return; }
+      if (!body)  { showFbMsg('rp-msg', 'Please describe the issue.', 'err'); return; }
+
+      const btn = document.getElementById('rp-submit');
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      const payload = {
+        category: rpCategory || 'bug',
+        title,
+        body,
+        severity: sev,
+        user_email: window._parsiaUser?.email || '',
+        user_agent: navigator.userAgent,
+        page_url: location.href,
+      };
+
+      try {
+        const res = await fetch(FB_API + '/report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('Server error');
+      } catch (_) {
+        /* Save locally if backend unreachable */
+        const saved = JSON.parse(localStorage.getItem('parsia_reports') || '[]');
+        saved.push({ ...payload, submitted_at: new Date().toISOString() });
+        localStorage.setItem('parsia_reports', JSON.stringify(saved));
+      }
+
+      /* Show success */
+      const card = document.querySelector('#report-modal .fb-card');
+      card.innerHTML = `<div class="fb-success-anim"><div class="fb-checkmark">✅</div><h2 class="fb-title" style="margin-top:16px">Report submitted!</h2><p class="fb-sub">We'll look into "<em>${title.slice(0,40)}</em>" as soon as possible. Thank you!</p><button class="fb-submit" style="margin-top:24px;border-color:rgba(255,107,107,.4);color:#ff8a8a" onclick="document.getElementById('report-modal').classList.remove('visible')">Close</button></div>`;
+    });
+
+    /* Helper */
+    function showFbMsg(elId, msg, type) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'fb-msg ' + type;
+      setTimeout(() => { el.textContent = ''; }, 4000);
+    }
+
+  })();
 
   </script>
 </body>

@@ -72,6 +72,7 @@ STRICT KEYWORD RULES
 • A character cannot SAY, MOVE, or EMOTE before ENTER, and cannot act after EXIT.
 • No blank lines inside indented blocks.
 • Output ONLY the raw Parsia source — no markdown fences, no explanations.
+• EVERY line inside the scene MUST start with a valid keyword or a character name followed by a valid keyword (SAY, EMOTE, MOVE). Do NOT output a single character's name on a line by itself.
 
 ═══════════════════════════════════════════════
 EXAMPLE

@@ -826,6 +826,7 @@
        CHARACTER ASSETS
     ────────────────────────────────────────── */
     const EMOTES = { neutral: '😐', happy: '😄', sad: '😢', angry: '😠', scared: '😨', thinking: '🤔', surprised: '😲', laughing: '😂', love: '😍', confused: '😕', evil: '😈', tired: '😴' };
+    const _esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
     function heroSVG(c) {
       return `<svg viewBox="0 0 76 114" fill="none">
@@ -1332,7 +1333,7 @@
         if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         const a = this.actions[n];
         document.getElementById('cur-action').innerHTML = a
-          ? `<span style="color:var(--teal)">${a.type}</span>${a.who ? ` <span style="color:#60b8ff">${a.who}</span>` : ''}${a.text ? `<br><span style="color:var(--text-muted);font-style:italic">"${a.text}"</span>` : ''}${a.emotion ? ` <span style="color:#b07aff">${a.emotion}</span>` : ''}${a.dir ? ` <span style="color:#ffc000">${a.dir}×${a.steps}</span>` : ''}${a.duration ? ` <span style="color:#888">${a.duration}s</span>` : ''}`
+          ? `<span style="color:var(--teal)">${_esc(a.type)}</span>${a.who ? ` <span style="color:#60b8ff">${_esc(a.who)}</span>` : ''}${a.text ? `<br><span style="color:var(--text-muted);font-style:italic">"${_esc(a.text)}"</span>` : ''}${a.emotion ? ` <span style="color:#b07aff">${_esc(a.emotion)}</span>` : ''}${a.dir ? ` <span style="color:#ffc000">${_esc(a.dir)}×${_esc(a.steps)}</span>` : ''}${a.duration ? ` <span style="color:#888">${_esc(a.duration)}s</span>` : ''}`
           : 'End of story';
       }
       _syncChars() {
@@ -1342,7 +1343,7 @@
         Object.entries(this.chars).forEach(([name, c]) => {
           const card = document.createElement('div');
           card.className = 'char-card' + (c.live ? ' live' : '');
-          card.innerHTML = `<div class="char-dot"></div><div class="char-card-name">${name}</div><div class="char-card-right"><span class="char-card-emote">${EMOTES[c.emotion] || '😐'}</span><span class="char-card-pos">${c.live ? Math.round(c.pos) + '%' : 'offstage'}</span></div>`;
+          card.innerHTML = `<div class="char-dot"></div><div class="char-card-name">${_esc(name)}</div><div class="char-card-right"><span class="char-card-emote">${EMOTES[c.emotion] || '😐'}</span><span class="char-card-pos">${c.live ? Math.round(c.pos) + '%' : 'offstage'}</span></div>`;
           list.appendChild(card);
         });
       }
@@ -2606,13 +2607,28 @@
       label.textContent = 'Encoding GIF…';
 
       gif.on('progress', p => { fill.style.width = (92 + p * 8) + '%'; });
-      gif.on('finished', blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = (engine.story.scene || 'parsia') + '_animation.gif';
-        a.click(); URL.revokeObjectURL(url);
+      gif.on('error', err => {
+        console.error('[GIF Export Error]', err);
         ExportManager.close();
-        showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
+        showToastGlobal('GIF encoding failed: ' + (err.message || 'unknown error'), 'err');
+      });
+      gif.on('finished', blob => {
+        try {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = (engine.story.scene || 'parsia') + '_animation.gif';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+          ExportManager.close();
+          showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
+        } catch (e) {
+          console.error('[GIF Download Error]', e);
+          ExportManager.close();
+          showToastGlobal('Failed to download GIF: ' + e.message, 'err');
+        }
       });
       gif.render();
     }, { once: false });
@@ -3653,16 +3669,16 @@
 
       /* ── Admin Dashboard ────────────────────────────────── */
       const adminBtn = document.getElementById('ud-admin');
-      const adminModal = document.getElementById('admin-modal');
+      const adminPanel = document.getElementById('admin-panel');
 
-      if (adminBtn && adminModal) {
+      if (adminBtn && adminPanel) {
         adminBtn.addEventListener('click', () => {
           userDrop.classList.remove('open');
-          adminModal.classList.add('visible');
+          adminPanel.style.display = 'flex';
           loadAdminStats();
         });
-        document.getElementById('admin-close')?.addEventListener('click', () => adminModal.classList.remove('visible'));
-        adminModal.addEventListener('click', e => { if (e.target === adminModal) adminModal.classList.remove('visible'); });
+        document.getElementById('adm-close')?.addEventListener('click', () => { adminPanel.style.display = 'none'; });
+        adminPanel.addEventListener('click', e => { if (e.target === adminPanel) adminPanel.style.display = 'none'; });
       }
 
       document.getElementById('admin-copy-sql')?.addEventListener('click', () => {
@@ -3673,7 +3689,7 @@
       async function loadAdminStats() {
         try {
           const res = await fetch(AUTH_API + '/auth/admin/stats', {
-            headers: { 'X-Admin-Key': 'parsia-admin-2024' }
+            headers: { 'Authorization': 'Bearer ' + (authToken || '') }
           });
           if (!res.ok) throw new Error('Admin access denied');
           const stats = await res.json();

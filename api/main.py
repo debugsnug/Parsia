@@ -1,5 +1,6 @@
 import sys
 import os
+import sqlite3
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -90,6 +91,93 @@ _STRIPE_PRICES = {
 
 _compile_count = 0
 _translate_count = 0
+
+DB_PATH = os.path.join(os.path.dirname(__file__), "parsia_users.db")
+
+def _get_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+class FeedbackRequest(BaseModel):
+    rating: int
+    category: str = "general"
+    message: str = ""
+    user_email: str = ""
+    page_url: str = ""
+
+
+class ReportRequest(BaseModel):
+    category: str = "bug"
+    title: str
+    body: str
+    severity: str = "medium"
+    user_email: str = ""
+    user_agent: str = ""
+    page_url: str = ""
+
+
+@app.post("/feedback")
+def submit_feedback(req: FeedbackRequest):
+    if not 1 <= req.rating <= 5:
+        raise HTTPException(status_code=400, detail="Rating must be 1–5.")
+    conn = _get_db()
+    try:
+        conn.execute(
+            "INSERT INTO feedback (rating, category, message, user_email, page_url) VALUES (?,?,?,?,?)",
+            (req.rating, req.category, req.message[:1000], req.user_email, req.page_url),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return {"message": "Feedback received. Thank you!"}
+
+
+@app.post("/report")
+def submit_report(req: ReportRequest):
+    if not req.title.strip():
+        raise HTTPException(status_code=400, detail="Title is required.")
+    conn = _get_db()
+    try:
+        conn.execute(
+            "INSERT INTO issue_reports (category, title, body, severity, user_email, user_agent, page_url) VALUES (?,?,?,?,?,?,?)",
+            (req.category, req.title[:120], req.body[:2000], req.severity, req.user_email, req.user_agent[:300], req.page_url),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return {"message": "Report submitted. We'll look into it!"}
+
+
+@app.get("/admin/feedback")
+def get_feedback(limit: int = 50):
+    conn = _get_db()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM feedback ORDER BY created_at DESC LIMIT ?", (limit,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+@app.get("/admin/reports")
+def get_reports(limit: int = 50, status: str = ""):
+    conn = _get_db()
+    try:
+        if status:
+            rows = conn.execute(
+                "SELECT * FROM issue_reports WHERE status=? ORDER BY created_at DESC LIMIT ?",
+                (status, limit),
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT * FROM issue_reports ORDER BY created_at DESC LIMIT ?", (limit,)
+            ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
 
 
 @app.get("/health")
