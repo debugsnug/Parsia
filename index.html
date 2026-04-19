@@ -6522,7 +6522,6 @@ EXIT Villain</textarea>
         <div class="adm-avatar" id="adm-avatar-icon">A</div>
         <span id="adm-whoami" style="font-size:11px;color:#8aa0c0">admin</span>
       </div>
-      <button class="adm-logout" id="adm-back-studio" style="background:var(--adm-teal);color:var(--void);border:none;margin-right:8px;">Studio</button>
       <button class="adm-logout" id="adm-logout">Sign Out</button>
     </div>
   </div>
@@ -9478,10 +9477,10 @@ EXIT Villain</textarea>
         const totalActions = engine.story.actions.length;
         const pollInterval = setInterval(() => {
           if (this.cancelled) { clearInterval(pollInterval); return; }
-          const pct = Math.round((engine.idx / Math.max(1, totalActions)) * 100);
+          const pct = Math.round((engine.cursor / Math.max(1, totalActions)) * 100);
           fill.style.width = Math.min(pct, 95) + '%';
           label.textContent = `Recording… ${Math.min(pct, 95)}%`;
-          if (engine.idx >= totalActions && !engine.running) {
+          if (engine.cursor >= totalActions && !engine.running) {
             clearInterval(pollInterval);
             fill.style.width = '100%';
             label.textContent = 'Finalizing…';
@@ -10045,10 +10044,10 @@ EXIT Villain</textarea>
         const capturer = setInterval(() => {
           gif.addFrame(canvas, { copy: true, delay: frameInterval });
           frameCount++;
-          const pct = Math.round((engine.idx / Math.max(1, totalActions)) * 90);
+          const pct = Math.round((engine.cursor / Math.max(1, totalActions)) * 90);
           fill.style.width = pct + '%';
           label.textContent = `Capturing frames… ${frameCount}`;
-          if (frameCount >= maxFrames || (engine.idx >= totalActions && !engine.running)) {
+          if (frameCount >= maxFrames || (engine.cursor >= totalActions && !engine.running)) {
             clearInterval(capturer);
             resolve();
           }
@@ -10059,28 +10058,13 @@ EXIT Villain</textarea>
       label.textContent = 'Encoding GIF…';
 
       gif.on('progress', p => { fill.style.width = (92 + p * 8) + '%'; });
-      gif.on('error', err => {
-        console.error('[GIF Export Error]', err);
-        ExportManager.close();
-        showToastGlobal('GIF encoding failed: ' + (err.message || 'unknown error'), 'err');
-      });
       gif.on('finished', blob => {
-        try {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = (engine.story.scene || 'parsia') + '_animation.gif';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(() => URL.revokeObjectURL(url), 100);
-          ExportManager.close();
-          showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
-        } catch (e) {
-          console.error('[GIF Download Error]', e);
-          ExportManager.close();
-          showToastGlobal('Failed to download GIF: ' + e.message, 'err');
-        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = (engine.story.scene || 'parsia') + '_animation.gif';
+        a.click(); URL.revokeObjectURL(url);
+        ExportManager.close();
+        showToastGlobal('GIF exported ✓ (' + Math.round(blob.size / 1024) + ' KB)', 'ok');
       });
       gif.render();
     }, { once: false });
@@ -11389,7 +11373,7 @@ EXIT Villain</textarea>
 
       function admFetch(path, opts = {}) {
         return fetch(AUTH_API + '/auth' + path, {
-          headers: { 'Authorization': 'Bearer ' + authToken, ...(opts.headers || {}) },
+          headers: { 'X-Admin-Key': 'parsia-admin-2024', 'Authorization': 'Bearer ' + authToken, ...(opts.headers || {}) },
           ...opts,
         }).then(async r => {
           const d = await r.json();
@@ -11459,11 +11443,6 @@ EXIT Villain</textarea>
         adminPanel.style.display = 'none';
         document.getElementById('landing').style.display = '';
         location.reload();
-      });
-
-      document.getElementById('adm-back-studio')?.addEventListener('click', () => {
-        adminPanel.style.display = 'none';
-        document.getElementById('app').style.display = 'flex';
       });
 
       const adminBtn = document.getElementById('ud-admin');
