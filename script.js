@@ -3107,7 +3107,9 @@
        OTP sent to registration email for verification
     ══════════════════════════════════════════════════════ */
     (function () {
-      const AUTH_API = (document.getElementById('sm-api-url')?.value || 'http://localhost:8000').trim();
+      function getAuthApi() {
+        return (document.getElementById('sm-api-url')?.value || 'http://localhost:8000').trim().replace(/\/$/, '');
+      }
 
       /* ── state ───────────────────────────────────────────── */
       let currentUser = null;
@@ -3147,7 +3149,7 @@
 
       /* ── API helpers ─────────────────────────────────────── */
       async function authFetch(endpoint, body) {
-        const res = await fetch(AUTH_API + '/auth' + endpoint, {
+        const res = await fetch(getAuthApi() + '/auth' + endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -3197,7 +3199,7 @@
       async function restoreSession() {
         if (!authToken) return;
         try {
-          const res = await fetch(AUTH_API + '/auth/me', {
+          const res = await fetch(getAuthApi() + '/auth/me', {
             headers: { 'Authorization': 'Bearer ' + authToken }
           });
           if (res.ok) {
@@ -3672,7 +3674,7 @@
 
       async function loadAdminStats() {
         try {
-          const res = await fetch(AUTH_API + '/auth/admin/stats', {
+          const res = await fetch(getAuthApi() + '/auth/admin/stats', {
             headers: { 'X-Admin-Key': 'parsia-admin-2024' }
           });
           if (!res.ok) throw new Error('Admin access denied');
@@ -3686,7 +3688,7 @@
         } catch (e) {
           /* Fallback to API stats */
           try {
-            const res = await fetch(AUTH_API + '/stats');
+            const res = await fetch(getAuthApi() + '/stats');
             const stats = await res.json();
             document.getElementById('astat-compiles').textContent = stats.compiles ?? '—';
             document.getElementById('astat-translates').textContent = stats.translates ?? '—';
@@ -3720,7 +3722,7 @@
         }
         try {
           showToast('Redirecting to checkout…', 'ok');
-          const r = await fetch(AUTH_API + '/checkout', {
+          const r = await fetch(getAuthApi() + '/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ plan, user_email: currentUser.email }),

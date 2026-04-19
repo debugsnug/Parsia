@@ -10131,7 +10131,9 @@ EXIT Villain</textarea>
        OTP sent to registration email for verification
     ══════════════════════════════════════════════════════ */
     (function () {
-      const AUTH_API = (document.getElementById('sm-api-url')?.value || 'http://localhost:8000').trim();
+      function getAuthApi() {
+        return (document.getElementById('sm-api-url')?.value || 'http://localhost:8000').trim().replace(/\/$/, '');
+      }
 
       /* ── state ───────────────────────────────────────────── */
       let currentUser = null;
@@ -10171,7 +10173,7 @@ EXIT Villain</textarea>
 
       /* ── API helpers ─────────────────────────────────────── */
       async function authFetch(endpoint, body) {
-        const res = await fetch(AUTH_API + '/auth' + endpoint, {
+        const res = await fetch(getAuthApi() + '/auth' + endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -10221,7 +10223,7 @@ EXIT Villain</textarea>
       async function restoreSession() {
         if (!authToken) return;
         try {
-          const res = await fetch(AUTH_API + '/auth/me', {
+          const res = await fetch(getAuthApi() + '/auth/me', {
             headers: { 'Authorization': 'Bearer ' + authToken }
           });
           if (res.ok) {
@@ -10629,7 +10631,7 @@ EXIT Villain</textarea>
         msgEl.textContent = '';
         if (!name) { msgEl.textContent = 'Display name cannot be empty.'; msgEl.className = 'pp-msg err'; return; }
         try {
-          const res = await fetch(AUTH_API + '/auth/me/update', {
+          const res = await fetch(getAuthApi() + '/auth/me/update', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
             body: JSON.stringify({ name, bio }),
@@ -10665,7 +10667,7 @@ EXIT Villain</textarea>
         if (newPass.length < 8) { msgEl.textContent = 'New password must be ≥ 8 characters.'; msgEl.className = 'pp-msg err'; return; }
         if (newPass !== confirm) { msgEl.textContent = 'Passwords do not match.'; msgEl.className = 'pp-msg err'; return; }
         try {
-          const res = await fetch(AUTH_API + '/auth/me/change-password', {
+          const res = await fetch(getAuthApi() + '/auth/me/change-password', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
             body: JSON.stringify({ old_password: oldPass, new_password: newPass }),
@@ -10687,7 +10689,7 @@ EXIT Villain</textarea>
       document.getElementById('pp-delete-account')?.addEventListener('click', async () => {
         if (!confirm('Are you sure you want to permanently delete your account? This cannot be undone.')) return;
         try {
-          await fetch(AUTH_API + '/auth/me', {
+          await fetch(getAuthApi() + '/auth/me', {
             method: 'DELETE',
             headers: { 'Authorization': 'Bearer ' + authToken },
           });
@@ -10819,7 +10821,7 @@ EXIT Villain</textarea>
       let _admSearchQuery = '';
 
       function admFetch(path, opts = {}) {
-        return fetch(AUTH_API + '/auth' + path, {
+        return fetch(getAuthApi() + '/auth' + path, {
           headers: { 'X-Admin-Key': 'parsia-admin-2024', 'Authorization': 'Bearer ' + authToken, ...(opts.headers || {}) },
           ...opts,
         }).then(async r => {
@@ -11128,7 +11130,7 @@ EXIT Villain</textarea>
         }
         try {
           showToast('Redirecting to checkout…', 'ok');
-          const r = await fetch(AUTH_API + '/checkout', {
+          const r = await fetch(getAuthApi() + '/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ plan, user_email: currentUser.email }),

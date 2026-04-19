@@ -33,9 +33,16 @@ except ImportError:
     _STRIPE = False
 
 import story_compiler as compiler
-from translator import translate_to_parsia
-from asset_generator import generate_assets
-from auth import router as auth_router
+
+if __package__:
+    from .translator import translate_to_parsia
+    from .asset_generator import generate_assets
+    from .auth import router as auth_router
+else:
+    # Fallback for direct execution from inside the api/ directory.
+    from translator import translate_to_parsia
+    from asset_generator import generate_assets
+    from auth import router as auth_router
 
 app = FastAPI(title="Parsia Compiler API", version="1.0.0")
 
